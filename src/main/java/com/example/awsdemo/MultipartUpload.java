@@ -17,14 +17,14 @@ import java.util.concurrent.Executors;
 public class MultipartUpload {
 
     public static void main(String[] args) throws Exception {
-        String existingBucketName = "tessst987-bucket";
+        String existingBucketName = "cloud-cube-eu2";
         String keyName = "my-picture.jpg";
         String filePath = "documents/my-picture.jpg";
 
         AmazonS3 amazonS3 = AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
-                .withRegion(Regions.US_EAST_1)
+                .withRegion(Regions.EU_WEST_2)
                 .build();
 
         int maxUploadThreads = 5;

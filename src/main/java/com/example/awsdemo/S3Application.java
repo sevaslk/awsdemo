@@ -36,15 +36,15 @@ public class S3Application {
         AmazonS3 s3client = AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(Regions.US_EAST_1)
+                .withRegion(Regions.EU_WEST_1)
                 .build();
 
         AWSS3Service awsService = new AWSS3Service(s3client);
 
-        bucketName = "tessst987-bucket";
+        bucketName = "cloud-cube-eu2";
 
         //creating a bucket
-        if (awsService.doesBucketExist(bucketName)) {
+        if(awsService.doesBucketExist(bucketName)) {
             System.out.println("Bucket name is not available."
                     + " Try again with a different Bucket name.");
             return;
@@ -52,12 +52,12 @@ public class S3Application {
         awsService.createBucket(bucketName);
 
         //list all the buckets
-        for (Bucket s : awsService.listBuckets()) {
+        for(Bucket s : awsService.listBuckets() ) {
             System.out.println(s.getName());
         }
 
         //deleting bucket
-        awsService.deleteBucket("tessst987-bucket-test2");
+        awsService.deleteBucket("baeldung-bucket-test2");
 
         //uploading object
         awsService.putObject(
@@ -68,7 +68,7 @@ public class S3Application {
 
         //listing objects
         ObjectListing objectListing = awsService.listObjects(bucketName);
-        for (S3ObjectSummary os : objectListing.getObjectSummaries()) {
+        for(S3ObjectSummary os : objectListing.getObjectSummaries()) {
             System.out.println(os.getKey());
         }
 
@@ -79,9 +79,9 @@ public class S3Application {
 
         //copying an object
         awsService.copyObject(
-                "tessst987-bucket",
+                "baeldung-bucket",
                 "picture/pic.png",
-                "tessst987-bucket2",
+                "baeldung-bucket2",
                 "Document/picture.png"
         );
 
@@ -89,12 +89,12 @@ public class S3Application {
         awsService.deleteObject(bucketName, "Document/hello.txt");
 
         //deleting multiple objects
-        String[] objkeyArr = {
+        String objkeyArr[] = {
                 "Document/hello2.txt",
                 "Document/picture.png"
         };
 
-        DeleteObjectsRequest delObjReq = new DeleteObjectsRequest("tessst987-bucket")
+        DeleteObjectsRequest delObjReq = new DeleteObjectsRequest("baeldung-bucket")
                 .withKeys(objkeyArr);
         awsService.deleteObjects(delObjReq);
     }
